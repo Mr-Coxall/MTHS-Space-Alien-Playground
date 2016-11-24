@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Diff</key>
+	<array>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>import GameKit
+
+func + (left: CGPoint, right: CGPoint) -&gt; CGPoint {
+    return CGPoint(x: left.x + right.x, y: left.y + right.y)
+}
+
+func - (left: CGPoint, right: CGPoint) -&gt; CGPoint {
+    return CGPoint(x: left.x - right.x, y: left.y - right.y)
+}
+
+func * (point: CGPoint, scalar: CGFloat) -&gt; CGPoint {
+    return CGPoint(x: point.x * scalar, y: point.y * scalar)
+}
+
+func / (point: CGPoint, scalar: CGFloat) -&gt; CGPoint {
+    return CGPoint(x: point.x / scalar, y: point.y / scalar)
+}
+
+#if !(arch(x86_64) || arch(arm64))
+    func sqrt(a: CGFloat) -&gt; CGFloat {
+        return CGFloat(sqrtf(Float(a)))
+    }
+#endif
+
+extension CGPoint {
+    func length() -&gt; CGFloat {
+        return sqrt(x*x + y*y)
+    }
+    
+    func normalized() -&gt; CGPoint {
+        return self / length()
+    }
+}
+</string>
+			<key>ModifiedRange</key>
+			<string>{54, 779}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{54, 0}</string>
+		</dict>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>green</string>
+			<key>ModifiedRange</key>
+			<string>{1013, 5}</string>
+			<key>OriginalContent</key>
+			<string>white</string>
+			<key>OriginalRange</key>
+			<string>{234, 5}</string>
+		</dict>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>        
+        run(SKAction.repeatForever(
+            SKAction.sequence([
+                SKAction.run(addMonster),
+                SKAction.wait(forDuration: 1.0)
+                ])
+        ))
+    }
+    
+    override func touchesEnded(_ touches: Set&lt;UITouch&gt;, with event: UIEvent?) {
+        
+        // 1 - Choose one of the touches to work with
+        guard let touch = touches.first else {
+            return
+        }
+        let touchLocation = touch.location(in: self)
+        
+        // 2 - Set up initial location of projectile
+        let projectile = SKSpriteNode(imageNamed: "projectile")
+        projectile.position = player.position
+        
+        // 3 - Determine offset of location to projectile
+        let offset = touchLocation - projectile.position
+        
+        // 4 - Bail out if you are shooting down or backwards
+        if (offset.x &lt; 0) { return }
+        
+        // 5 - OK to add now - you've double checked position
+        addChild(projectile)
+        
+        // 6 - Get the direction of where to shoot
+        let direction = offset.normalized()
+        
+        // 7 - Make it shoot far enough to be guaranteed off screen
+        let shootAmount = direction * 1000
+        
+        // 8 - Add the shoot amount to the current position
+        let realDest = shootAmount + projectile.position
+        
+        // 9 - Create the actions
+        let actionMove = SKAction.move(to: realDest, duration: 2.0)
+        let actionMoveDone = SKAction.removeFromParent()
+        projectile.run(SKAction.sequence([actionMove, actionMoveDone]))
+        
+    }
+    
+    
+    func random() -&gt; CGFloat {
+        return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
+    }
+    
+    func random(min: CGFloat, max: CGFloat) -&gt; CGFloat {
+        return random() * (max - min) + min
+    }
+    
+    func addMonster() {
+        
+        // Create sprite
+        let monster = SKSpriteNode(imageNamed: "monster")
+        
+        // Determine where to spawn the monster along the Y axis
+        let actualY = random(min: monster.size.height/2, max: size.height - monster.size.height/2)
+        
+        // Position the monster slightly off-screen along the right edge,
+        // and along a random position along the Y axis as calculated above
+        monster.position = CGPoint(x: size.width + monster.size.width/2, y: actualY)
+        
+        // Add the monster to the scene
+        addChild(monster)
+        
+        // Determine speed of the monster
+        let actualDuration = random(min: CGFloat(2.0), max: CGFloat(4.0))
+        
+        // Create the actions
+        let actionMove = SKAction.move(to: CGPoint(x: -monster.size.width/2, y: actualY), duration: TimeInterval(actualDuration))
+        let actionMoveDone = SKAction.removeFromParent()
+        monster.run(SKAction.sequence([actionMove, actionMoveDone]))
+        
+</string>
+			<key>ModifiedRange</key>
+			<string>{1121, 2847}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{342, 0}</string>
+		</dict>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>
+
+</string>
+			<key>ModifiedRange</key>
+			<string>{3978, 2}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{352, 0}</string>
+		</dict>
+	</array>
+	<key>File</key>
+	<string>Chapters/Unit0.playgroundchapter/Pages/Unit0-01.playgroundpage/Contents.swift</string>
+</dict>
+</plist>
