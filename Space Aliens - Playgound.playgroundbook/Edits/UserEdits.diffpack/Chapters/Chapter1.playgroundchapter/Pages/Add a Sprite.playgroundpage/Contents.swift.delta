@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Diff</key>
+	<array>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>, SKPhysicsContactDelegate</string>
+			<key>ModifiedRange</key>
+			<string>{264, 26}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{264, 0}</string>
+		</dict>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>    let scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
+    var score = 0
+</string>
+			<key>ModifiedRange</key>
+			<string>{580, 77}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{554, 0}</string>
+		</dict>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>    override func forwardingTarget(for aSelector: Selector!) -&gt; Any? 
+    
+    // for collision detection
+    let collisionMissileCategory: UInt32  = 0x1 &lt;&lt; 0
+    let collisionAlienCategory: UInt32    = 0x1 &lt;&lt; 1
+    let collisionSpaceShipCategory: UInt32  = 0x1 &lt;&lt; 2
+</string>
+			<key>ModifiedRange</key>
+			<string>{824, 267}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{721, 0}</string>
+		</dict>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>        
+        // Handle contact/collisions
+        self.physicsWorld.contactDelegate = self
+        
+</string>
+			<key>ModifiedRange</key>
+			<string>{1185, 104}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{815, 0}</string>
+		</dict>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>        scoreLabel.text = "Score: 0"
+        scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
+        scoreLabel.fontColor = #colorLiteral(red: 0.807843148708344, green: 0.0274509806185961, blue: 0.333333343267441, alpha: 1.0)
+        scoreLabel.fontSize = 25
+        scoreLabel.position = CGPoint(x: 25, y: frame.size.height - 50)
+        self.addChild(scoreLabel)
+        
+        ship.position = CGPoint(x: (frame.size.width / 2), y: 100)
+</string>
+			<key>ModifiedRange</key>
+			<string>{1774, 466}</string>
+			<key>OriginalContent</key>
+			<string>        ship.position = CGPoint(x: (size.width / 2), y: 100)
+</string>
+			<key>OriginalRange</key>
+			<string>{1300, 61}</string>
+		</dict>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>        ship.physicsBody?.isDynamic = true
+        ship.physicsBody = SKPhysicsBody(texture: ship.texture!, size: ship.size)
+        ship.physicsBody?.affectedByGravity = false
+        ship.physicsBody?.usesPreciseCollisionDetection = true
+        ship.physicsBody?.categoryBitMask = collisionSpaceShipCategory
+        ship.physicsBody?.contactTestBitMask = collisionAlienCategory
+        ship.physicsBody?.collisionBitMask = 0x0
+</string>
+			<key>ModifiedRange</key>
+			<string>{2273, 430}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{1394, 0}</string>
+		</dict>
+		<dict>
+			<key>ModifiedContent</key>
+			<string> </string>
+			<key>ModifiedRange</key>
+			<string>{3275, 1}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{1966, 0}</string>
+		</dict>
+		<dict>
+			<key>ModifiedContent</key>
+			<string> </string>
+			<key>ModifiedRange</key>
+			<string>{3277, 1}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{1967, 0}</string>
+		</dict>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>        
+        // start game with a single alien attack
+        createAlien()
+</string>
+			<key>ModifiedRange</key>
+			<string>{3390, 80}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{2079, 0}</string>
+		</dict>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>        // http://soundbible.com/576-Barrel-Exploding.html
+        
+    }
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        let secondNode = contact.bodyB.node as! SKSpriteNode
+        
+        //if ((contact.bodyA.categoryBitMask == collisionAlienCategory) &amp;&amp;  
+        //(contact.bodyB.categoryBitMask == collisionMissileCategory)) ||
+        //((contact.bodyA.categoryBitMask == collisionMissileCategory) &amp;&amp;  
+        //(contact.bodyB.categoryBitMask == collisionAlienCategory)) {
+        
+        if ((contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask) == (collisionAlienCategory | collisionMissileCategory)) {
+            // remove missile and alien
+            ship.run(SKAction.playSoundFileNamed("BarrelExploding.wav", waitForCompletion: false))
+            contact.bodyA.node?.removeFromParent()
+            contact.bodyB.node?.removeFromParent()
+            score += 1
+            scoreLabel.text = "Score: " + String(score)
+        }
+</string>
+			<key>ModifiedRange</key>
+			<string>{4876, 969}</string>
+			<key>OriginalContent</key>
+			<string>        
+        
+</string>
+			<key>OriginalRange</key>
+			<string>{3485, 18}</string>
+		</dict>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>                
+</string>
+			<key>ModifiedRange</key>
+			<string>{7140, 17}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{4798, 0}</string>
+		</dict>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>                aMissile.position = CGPoint(x: ship.position.x, y: 100)
+                aMissile.name = "missile"
+                aMissile.physicsBody?.isDynamic = true
+                aMissile.physicsBody = SKPhysicsBody(texture: aMissile.texture!, size: aMissile.size)
+                aMissile.physicsBody?.affectedByGravity = false
+                aMissile.physicsBody?.usesPreciseCollisionDetection = true
+                aMissile.physicsBody?.categoryBitMask = collisionMissileCategory
+                aMissile.physicsBody?.contactTestBitMask = collisionSpaceShipCategory
+                aMissile.physicsBody?.collisionBitMask = 0x0
+</string>
+			<key>ModifiedRange</key>
+			<string>{7228, 638}</string>
+			<key>OriginalContent</key>
+			<string>                aMissile.position = CGPoint(x: (ship.position.x), y: 100)
+</string>
+			<key>OriginalRange</key>
+			<string>{4869, 74}</string>
+		</dict>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>frame.size.height + </string>
+			<key>ModifiedRange</key>
+			<string>{7959, 20}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{5036, 0}</string>
+		</dict>
+		<dict>
+			<key>ModifiedContent</key>
+			<string></string>
+			<key>ModifiedRange</key>
+			<string>{7982, 0}</string>
+			<key>OriginalContent</key>
+			<string>0</string>
+			<key>OriginalRange</key>
+			<string>{5039, 1}</string>
+		</dict>
+		<dict>
+			<key>ModifiedContent</key>
+			<string></string>
+			<key>ModifiedRange</key>
+			<string>{7995, 0}</string>
+			<key>OriginalContent</key>
+			<string>.0</string>
+			<key>OriginalRange</key>
+			<string>{5053, 2}</string>
+		</dict>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>                // now make the sound happen
+                aMissile.run(SKAction.playSoundFileNamed("laser1.wav", waitForCompletion: false))
+</string>
+			<key>ModifiedRange</key>
+			<string>{8081, 143}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{5141, 0}</string>
+		</dict>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>        
+</string>
+			<key>ModifiedRange</key>
+			<string>{8434, 9}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{5351, 0}</string>
+		</dict>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>        aSingleAlien.name =  "alien"
+        aSingleAlien.physicsBody?.isDynamic = true
+        aSingleAlien.physicsBody = SKPhysicsBody(texture: aSingleAlien.texture!, size: aSingleAlien.size)
+        aSingleAlien.physicsBody?.affectedByGravity = false
+        aSingleAlien.physicsBody?.usesPreciseCollisionDetection = true
+        aSingleAlien.physicsBody?.categoryBitMask = collisionAlienCategory
+        aSingleAlien.physicsBody?.contactTestBitMask = collisionMissileCategory
+        aSingleAlien.physicsBody?.collisionBitMask = 0x0
+        let alienStartPositionX = Int(arc4random_uniform(UInt32(frame.size.width - 0 + 1)))
+        let alienEndPositionX = Int(arc4random_uniform(UInt32(frame.size.width - 0 + 1)))
+        aSingleAlien.position = CGPoint(x: alienStartPositionX, y: Int(frame.size.height) + 100)
+        let alienMove = SKAction.move(to: CGPoint(x:alienEndPositionX, y: -100), duration: 4)
+</string>
+			<key>ModifiedRange</key>
+			<string>{8508, 910}</string>
+			<key>OriginalContent</key>
+			<string>        let alienStartPositionX = Int(arc4random_uniform(1285 - 50) + 50)
+        let alienEndPositionX = Int(arc4random_uniform(1285 - 50) + 50)
+        aSingleAlien.position = CGPoint(x: alienStartPositionX, y: 900)
+        let alienMove = SKAction.move(to: CGPoint(x:alienEndPositionX, y: -100), duration: 2.0)
+</string>
+			<key>OriginalRange</key>
+			<string>{5416, 314}</string>
+		</dict>
+		<dict>
+			<key>ModifiedContent</key>
+			<string></string>
+			<key>ModifiedRange</key>
+			<string>{9526, 0}</string>
+			<key>OriginalContent</key>
+			<string>        
+        
+</string>
+			<key>OriginalRange</key>
+			<string>{5838, 18}</string>
+		</dict>
+	</array>
+	<key>File</key>
+	<string>Chapters/Chapter1.playgroundchapter/Pages/Add a Sprite.playgroundpage/Contents.swift</string>
+</dict>
+</plist>
